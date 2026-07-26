@@ -158,7 +158,10 @@ Releases are automated via [Changesets](https://github.com/changesets/changesets
    a version bump to npm.
 3. Publishing requires an `NPM_TOKEN` secret on the repository with publish
    access to the `@foundryui` org and to `create-react-foundry` — this is
-   infrastructure setup, not something a release PR can do on its own.
+   infrastructure setup, not something a release PR can do on its own. Until
+   that secret exists, the release workflow's publish step no-ops safely
+   (it checks for the token and skips with a message) rather than failing —
+   so pushes to `main` before then won't fail CI or send failure emails.
 
 The very first release (`0.1.0` for all three packages) was hand-written
 rather than produced by this flow, since there was no prior published version
