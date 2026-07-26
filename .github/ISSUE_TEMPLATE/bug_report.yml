@@ -1,0 +1,70 @@
+name: Bug report
+description: Something in Foundry itself, or in a project it scaffolds, isn't working as documented.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. The more precisely this is reproducible, the faster it gets fixed —
+        "it broke" is much harder to act on than the steps below.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where's the bug?
+      options:
+        - create-react-foundry (project scaffolding)
+        - "@foundryui/cli (foundry generate)"
+        - "@foundryui/generator-core"
+        - A scaffolded project's generated code (Button, Input, tokens, Storybook, CI)
+        - Documentation
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug. Include the exact error message or unexpected output if there is one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: The exact commands you ran, in order, from a clean state if possible.
+      placeholder: |
+        1. npm create react-foundry@latest my-app
+        2. cd my-app && pnpm install
+        3. pnpm generate component Card
+        4. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      value: |
+        - Foundry package + version:
+        - Node version (`node -v`):
+        - pnpm version (`pnpm -v`):
+        - OS:
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Full error output if you have it. This will be rendered as a code block, so no need to add backticks yourself.
+      render: shell

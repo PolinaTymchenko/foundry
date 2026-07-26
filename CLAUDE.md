@@ -71,6 +71,9 @@ or Input in the template.
 `pnpm build` / `pnpm test` / `pnpm lint` / `pnpm typecheck` / `pnpm format:check`
 — all run via Turborepo across every package. `pnpm lint:deps` runs the
 architectural boundary check separately (it's repo-wide, not per-package).
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full development workflow,
+changeset/release process, and PR expectations — this file stays focused on
+architecture and hard rules, not process.
 
 Testing a template change end to end requires a real scaffold — `renderTemplate`
 unit tests catch substitution bugs, but CSS Modules scoping, Storybook

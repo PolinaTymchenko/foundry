@@ -2,7 +2,25 @@
   "name": "@foundryui/cli",
   "version": "0.1.0",
   "description": "The ongoing, in-project Foundry CLI. Scaffolds artifacts (components today, more artifact types later) into an existing Foundry project. Not to be confused with create-react-foundry, which scaffolds the project itself.",
+  "keywords": [
+    "react",
+    "design-system",
+    "component-generator",
+    "cli",
+    "scaffolding",
+    "typescript",
+    "storybook",
+    "accessibility"
+  ],
   "license": "Apache-2.0",
+  "author": "Polina Tymchenko <polinatymchenkodev@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PolinaTymchenko/foundry.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/PolinaTymchenko/foundry/tree/main/packages/cli#readme",
+  "bugs": "https://github.com/PolinaTymchenko/foundry/issues",
   "type": "module",
   "engines": {
     "node": ">=20"

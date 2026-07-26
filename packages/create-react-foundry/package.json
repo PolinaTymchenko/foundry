@@ -2,7 +2,26 @@
   "name": "create-react-foundry",
   "version": "0.1.0",
   "description": "Scaffold a new Foundry-based project. Run with: npm create react-foundry",
+  "keywords": [
+    "react",
+    "design-system",
+    "component-library",
+    "scaffolding",
+    "create-react-app",
+    "vite",
+    "typescript",
+    "storybook",
+    "cli"
+  ],
   "license": "Apache-2.0",
+  "author": "Polina Tymchenko <polinatymchenkodev@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PolinaTymchenko/foundry.git",
+    "directory": "packages/create-react-foundry"
+  },
+  "homepage": "https://github.com/PolinaTymchenko/foundry/tree/main/packages/create-react-foundry#readme",
+  "bugs": "https://github.com/PolinaTymchenko/foundry/issues",
   "type": "module",
   "engines": {
     "node": ">=20"

@@ -1,0 +1,48 @@
+name: Feature request
+description: Propose something Foundry — or a project it scaffolds — should do that it doesn't today.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing, a quick check of [Project status in the README](../../README.md#project-status)
+        is worth it — several large features (a generated docs site, a token compiler, codemods,
+        multi-tool AI config) are already known gaps with their own reasoning, not oversights.
+        If yours is one of those, feel free to file anyway with your specific use case — concrete
+        motivation is what turns a known gap into a prioritized one.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where does this apply?
+      options:
+        - create-react-foundry (project scaffolding)
+        - "@foundryui/cli (foundry generate)"
+        - "@foundryui/generator-core"
+        - Generated project conventions (component API, styling, folder structure, testing)
+        - Documentation
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you running into?
+      description: Describe the situation that led you here, not just the feature you're picturing as the fix.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to see?
+      description: Your proposed solution. Doesn't need to be fully designed — the shape of the idea is enough to start a discussion.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives or workarounds you've considered
+      description: Including "none" or "I'm working around it by doing X" — useful either way.

@@ -2,7 +2,23 @@
   "name": "@foundryui/generator-core",
   "version": "0.1.0",
   "description": "Framework-agnostic template rendering and prompt orchestration engine shared by every Foundry generator.",
+  "keywords": [
+    "scaffolding",
+    "code-generation",
+    "generator",
+    "cli",
+    "template-engine",
+    "typescript"
+  ],
   "license": "Apache-2.0",
+  "author": "Polina Tymchenko <polinatymchenkodev@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PolinaTymchenko/foundry.git",
+    "directory": "packages/generator-core"
+  },
+  "homepage": "https://github.com/PolinaTymchenko/foundry/tree/main/packages/generator-core#readme",
+  "bugs": "https://github.com/PolinaTymchenko/foundry/issues",
   "type": "module",
   "engines": {
     "node": ">=20"

@@ -2,7 +2,15 @@
   "name": "foundry",
   "private": true,
   "version": "0.0.0",
+  "description": "Scaffolds enterprise React design systems — components, tokens, docs, and CI, wired together from the first commit.",
   "license": "Apache-2.0",
+  "author": "Polina Tymchenko <polinatymchenkodev@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PolinaTymchenko/foundry.git"
+  },
+  "homepage": "https://github.com/PolinaTymchenko/foundry#readme",
+  "bugs": "https://github.com/PolinaTymchenko/foundry/issues",
   "type": "module",
   "packageManager": "pnpm@9.15.9",
   "engines": {
