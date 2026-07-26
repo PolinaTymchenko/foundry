@@ -2,7 +2,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import * as clack from "@clack/prompts";
-import { PromptCancelledError, runGenerator } from "@foundryui/generator-core";
+import { parseFlag, PromptCancelledError, runGenerator } from "@foundryui/generator-core";
 import { projectHooks } from "./hooks.js";
 import { projectQuestions } from "./prompts.js";
 import type { ProjectAnswers } from "./types.js";
@@ -19,19 +19,6 @@ const LICENSE_SPDX: Record<string, string> = {
   "apache-2.0": "Apache-2.0",
   mit: "MIT",
 };
-
-/** Reads --name=value or --name value from argv; undefined if the flag isn't present. */
-function parseFlag(argv: string[], name: string): string | undefined {
-  const eqForm = argv.find((arg) => arg.startsWith(`--${name}=`));
-  if (eqForm) {
-    return eqForm.slice(`--${name}=`.length);
-  }
-  const flagIndex = argv.indexOf(`--${name}`);
-  if (flagIndex !== -1 && argv[flagIndex + 1]) {
-    return argv[flagIndex + 1];
-  }
-  return undefined;
-}
 
 async function main(): Promise<void> {
   clack.intro("create-react-foundry");

@@ -1,0 +1,9 @@
+/**
+ * CSS Module — see docs/adr/0002-styling-conventions.md. Every value
+ * should come from a design token, not a hardcoded number or color.
+ */
+
+.root {
+  font-family: var(--{{tokenPrefix}}-font-sans);
+  color: var(--{{tokenPrefix}}-color-fg);
+}

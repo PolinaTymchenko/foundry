@@ -15,11 +15,13 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "format": "biome format --write .",
-    "format:check": "biome format ."
+    "format:check": "biome format .",
+    "generate": "foundry generate"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@eslint/js": "^9.17.0",
+    "@foundryui/cli": "^0.1.0",
     "eslint": "^9.17.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^5.1.0",

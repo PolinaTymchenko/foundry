@@ -1,0 +1,28 @@
+{
+  "name": "@foundryui/cli",
+  "version": "0.1.0",
+  "description": "The ongoing, in-project Foundry CLI. Scaffolds artifacts (components today, more artifact types later) into an existing Foundry project. Not to be confused with create-react-foundry, which scaffolds the project itself.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "foundry": "./dist/index.js"
+  },
+  "files": ["dist", "templates"],
+  "scripts": {
+    "build": "tsup && chmod +x dist/index.js",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.9.1",
+    "@foundryui/generator-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

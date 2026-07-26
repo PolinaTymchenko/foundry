@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Input } from "./Input.js";
 
 const meta: Meta<typeof Input> = {
-  title: "Input",
+  title: "Atoms/Input",
   component: Input,
   argTypes: {
     size: {

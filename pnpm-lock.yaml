@@ -33,6 +33,28 @@ importers:
         specifier: ^8.18.2
         version: 8.65.0(eslint@9.39.5)(typescript@5.9.3)
 
+  packages/cli:
+    dependencies:
+      '@clack/prompts':
+        specifier: ^0.9.1
+        version: 0.9.1
+      '@foundryui/generator-core':
+        specifier: workspace:*
+        version: link:../generator-core
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.20.1
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(postcss@8.5.23)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.9(@types/node@22.20.1)
+
   packages/create-react-foundry:
     dependencies:
       '@clack/prompts':
