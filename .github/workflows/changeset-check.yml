@@ -6,6 +6,12 @@ on:
 
 jobs:
   changeset:
+    # The "Version Packages" PR changesets/action opens consumes the
+    # pending changeset(s) as part of creating itself, so by the time this
+    # check runs against it, there are correctly zero pending changesets —
+    # which `changeset status` otherwise treats as an error. Skip this one
+    # PR type rather than have it permanently, falsely red.
+    if: github.head_ref != 'changeset-release/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

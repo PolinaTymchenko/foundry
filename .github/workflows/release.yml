@@ -30,6 +30,10 @@ jobs:
 
       - uses: changesets/action@v1
         with:
+          # `changeset version` (the default) leaves package.json formatted
+          # in a way Biome's format:check rejects — this runs it, then
+          # reformats, so the Version Packages PR it opens is already clean.
+          version: sh .github/scripts/release-version.sh
           # With zero pending changesets (true until the first real changeset
           # is merged), changesets/action skips the "open a Version PR" path
           # and runs this command directly — so guard it on NPM_TOKEN
