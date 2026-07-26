@@ -53,7 +53,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     ariaLabel,
     ariaLabelledBy,
     guidance:
-      'an icon-only button (no visible text) needs an accessible name — pass aria-label="..." so assistive technology can announce what it does.',
+      'an icon-only button (no visible text) needs an accessible name. Pass aria-label="..." so assistive technology can announce what it does.',
   });
 
   const classNames = [styles.button, className].filter(Boolean).join(" ");

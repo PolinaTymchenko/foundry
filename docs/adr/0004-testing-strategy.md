@@ -7,7 +7,7 @@
 The project's a11y-first claim only means something if it's clear what
 actually gets tested where. Without an explicit split, the same concern
 (does this button announce correctly to a screen reader?) risks being
-tested twice in incompatible, redundant ways, or — worse — assumed to be
+tested twice in incompatible, redundant ways, or, worse, assumed to be
 covered by the other layer and tested by neither.
 
 ## Decision
@@ -20,8 +20,8 @@ covered by the other layer and tested by neither.
   behavior and correctness — not visual accessibility scanning.
 - **`afterEach(cleanup)` is required in every package's `vitest.setup.ts`.**
   Vitest without `globals: true` does not auto-register React Testing
-  Library's cleanup; skipping this was a real bug in Milestone 2 — DOM
-  state leaked across tests in the same file and made role queries
+  Library's cleanup. Skipping this was a real bug in Milestone 2: DOM state
+  leaked across tests in the same file and made role queries
   non-deterministic depending on run order.
 - **Automated accessibility scanning (axe) happens exclusively at the
   Storybook-story level**, via `@storybook/test-runner` against every

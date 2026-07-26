@@ -69,10 +69,9 @@ async function main(): Promise<void> {
         `  cd ${answers.projectName}`,
         "  pnpm dev",
         "",
-        "That starts Storybook with two real components — Button and Input —",
-        "covering variants, loading and disabled states, controlled and",
-        "uncontrolled form state, and a passing accessibility check.",
-        "Ready to look at and modify.",
+        "That starts Storybook with Button and Input: variants, loading and",
+        "disabled states, controlled and uncontrolled form state, and a",
+        "passing accessibility check. Ready to look at and modify.",
       ].join("\n"),
     );
   } catch (error) {

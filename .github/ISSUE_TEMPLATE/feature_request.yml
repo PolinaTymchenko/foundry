@@ -1,14 +1,14 @@
 name: Feature request
-description: Propose something Foundry — or a project it scaffolds — should do that it doesn't today.
+description: Propose something Foundry, or a project it scaffolds, should do that it doesn't today.
 labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Before filing, a quick check of [Project status in the README](../../README.md#project-status)
-        is worth it — several large features (a generated docs site, a token compiler, codemods,
-        multi-tool AI config) are already known gaps with their own reasoning, not oversights.
-        If yours is one of those, feel free to file anyway with your specific use case — concrete
+        Check [Project status in the README](../../README.md#project-status) first.
+        Several large features (a generated docs site, a token compiler, codemods,
+        multi-tool AI config) are known gaps with their own reasoning, not oversights.
+        If yours is one of those, file it anyway with your specific use case — concrete
         motivation is what turns a known gap into a prioritized one.
 
   - type: dropdown

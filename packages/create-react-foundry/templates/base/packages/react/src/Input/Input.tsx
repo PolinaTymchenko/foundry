@@ -68,7 +68,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     ariaLabel,
     ariaLabelledBy,
     guidance:
-      'an input with no visible label needs an accessible name — pass "label", or aria-label="..." if a visible label truly isn\'t appropriate.',
+      'an input with no visible label needs an accessible name. Pass "label", or aria-label="..." if a visible label isn\'t appropriate here.',
   });
 
   return (

@@ -2,7 +2,7 @@
   "name": "foundry",
   "private": true,
   "version": "0.0.0",
-  "description": "Scaffolds enterprise React design systems — components, tokens, docs, and CI, wired together from the first commit.",
+  "description": "Scaffolds a React design system: components, tokens, docs, and CI, wired together from the first commit.",
   "license": "Apache-2.0",
   "author": "Polina Tymchenko <polinatymchenkodev@gmail.com>",
   "repository": {
