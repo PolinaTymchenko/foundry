@@ -33,9 +33,11 @@ jobs:
           # With zero pending changesets (true until the first real changeset
           # is merged), changesets/action skips the "open a Version PR" path
           # and runs this command directly — so guard it on NPM_TOKEN
-          # actually being configured, rather than failing (and emailing)
-          # on every push to main until publishing is set up for real.
-          publish: sh -c 'if [ -n "$NODE_AUTH_TOKEN" ]; then pnpm release; else echo "NPM_TOKEN secret not set — skipping publish. Add it in repo settings when ready to publish for real (see CONTRIBUTING.md)."; fi'
+          # actually being configured, rather than failing (and emailing) on
+          # every push to main until publishing is set up for real. This is
+          # a script file, not an inline command, because changesets/action
+          # tokenizes the `publish:` string itself and mangles nested quotes.
+          publish: sh .github/scripts/release-publish.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
