@@ -1,0 +1,47 @@
+/**
+ * Design tokens as plain CSS custom properties. This is the only place
+ * color, spacing, radius, and type values are allowed to live — components
+ * reference these variables, never a raw hex code or a raw pixel value.
+ *
+ * Prefixed with --{{tokenPrefix}}- so these variables can't collide with a
+ * host application's own CSS custom properties. Names are stable; the exact
+ * values here are a starting point, not a commitment — repaint freely.
+ */
+:root {
+  /* Color */
+  --{{tokenPrefix}}-color-bg: #ffffff;
+  --{{tokenPrefix}}-color-fg: #1a1b1e;
+  --{{tokenPrefix}}-color-muted: #f4f4f5;
+  --{{tokenPrefix}}-color-muted-fg: #6b7076;
+  --{{tokenPrefix}}-color-border: #d8dade;
+  --{{tokenPrefix}}-color-primary: #2f6480;
+  --{{tokenPrefix}}-color-primary-fg: #ffffff;
+  --{{tokenPrefix}}-color-danger: #b3261e;
+  --{{tokenPrefix}}-color-danger-fg: #ffffff;
+
+  /* Spacing */
+  --{{tokenPrefix}}-space-xs: 0.25rem;
+  --{{tokenPrefix}}-space-sm: 0.5rem;
+  --{{tokenPrefix}}-space-md: 0.75rem;
+  --{{tokenPrefix}}-space-lg: 1rem;
+  --{{tokenPrefix}}-space-xl: 1.5rem;
+
+  /* Radius */
+  --{{tokenPrefix}}-radius-sm: 4px;
+  --{{tokenPrefix}}-radius-md: 6px;
+  --{{tokenPrefix}}-radius-lg: 10px;
+  --{{tokenPrefix}}-radius-full: 9999px;
+
+  /* Type */
+  --{{tokenPrefix}}-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --{{tokenPrefix}}-font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --{{tokenPrefix}}-text-sm: 0.8125rem;
+  --{{tokenPrefix}}-text-md: 0.9375rem;
+  --{{tokenPrefix}}-text-lg: 1.0625rem;
+  --{{tokenPrefix}}-weight-regular: 400;
+  --{{tokenPrefix}}-weight-medium: 500;
+  --{{tokenPrefix}}-weight-bold: 600;
+
+  /* Focus */
+  --{{tokenPrefix}}-focus-ring: 0 0 0 2px var(--{{tokenPrefix}}-color-bg), 0 0 0 4px var(--{{tokenPrefix}}-color-primary);
+}

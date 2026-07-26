@@ -1,0 +1,108 @@
+/**
+ * Every value below comes from a design token — no hardcoded colors,
+ * spacing, or type sizes. Import "{{packageScope}}/tokens/tokens.css" once
+ * near your app root before these variables have anything to resolve to.
+ */
+
+.fd-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--{{tokenPrefix}}-space-sm);
+  border: 1px solid transparent;
+  border-radius: var(--{{tokenPrefix}}-radius-md);
+  font-family: var(--{{tokenPrefix}}-font-sans);
+  font-weight: var(--{{tokenPrefix}}-weight-medium);
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.fd-button:focus-visible {
+  outline: none;
+  box-shadow: var(--{{tokenPrefix}}-focus-ring);
+}
+
+.fd-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Sizes */
+.fd-button--sm {
+  padding: var(--{{tokenPrefix}}-space-xs) var(--{{tokenPrefix}}-space-md);
+  font-size: var(--{{tokenPrefix}}-text-sm);
+}
+
+.fd-button--md {
+  padding: var(--{{tokenPrefix}}-space-sm) var(--{{tokenPrefix}}-space-lg);
+  font-size: var(--{{tokenPrefix}}-text-md);
+}
+
+.fd-button--lg {
+  padding: var(--{{tokenPrefix}}-space-md) var(--{{tokenPrefix}}-space-xl);
+  font-size: var(--{{tokenPrefix}}-text-lg);
+}
+
+/* Variants */
+.fd-button--primary {
+  background-color: var(--{{tokenPrefix}}-color-primary);
+  color: var(--{{tokenPrefix}}-color-primary-fg);
+}
+
+.fd-button--primary:not(:disabled):hover {
+  filter: brightness(0.92);
+}
+
+.fd-button--secondary {
+  background-color: var(--{{tokenPrefix}}-color-muted);
+  color: var(--{{tokenPrefix}}-color-fg);
+  border-color: var(--{{tokenPrefix}}-color-border);
+}
+
+.fd-button--secondary:not(:disabled):hover {
+  background-color: var(--{{tokenPrefix}}-color-border);
+}
+
+.fd-button--ghost {
+  background-color: transparent;
+  color: var(--{{tokenPrefix}}-color-fg);
+}
+
+.fd-button--ghost:not(:disabled):hover {
+  background-color: var(--{{tokenPrefix}}-color-muted);
+}
+
+.fd-button--danger {
+  background-color: var(--{{tokenPrefix}}-color-danger);
+  color: var(--{{tokenPrefix}}-color-danger-fg);
+}
+
+.fd-button--danger:not(:disabled):hover {
+  filter: brightness(0.92);
+}
+
+.fd-button__label {
+  display: inline-block;
+}
+
+.fd-button__icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.fd-button__spinner {
+  animation: fd-button-spin 0.6s linear infinite;
+}
+
+@keyframes fd-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fd-button__spinner {
+    animation-duration: 1.4s;
+  }
+}

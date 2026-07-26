@@ -2,18 +2,29 @@
   "name": "{{projectName}}",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "packageManager": "pnpm@9.15.9",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
+    "dev": "turbo run dev",
     "build": "turbo run build",
     "test": "turbo run test",
     "lint": "turbo run lint",
-    "typecheck": "turbo run typecheck"
+    "typecheck": "turbo run typecheck",
+    "format": "biome format --write .",
+    "format:check": "biome format ."
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^5.1.0",
     "turbo": "^2.3.3",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.2",
+    "wait-on": "^8.0.1"
   }
 }

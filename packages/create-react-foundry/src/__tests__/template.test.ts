@@ -23,7 +23,11 @@ describe("the base template", () => {
     const written = await renderTemplate({
       templateRoot,
       targetDir,
-      variables: { projectName: "acme-design-system" },
+      variables: {
+        projectName: "acme-design-system",
+        packageScope: "@acme",
+        tokenPrefix: "fd",
+      },
     });
 
     expect(written.length).toBeGreaterThan(0);
@@ -44,5 +48,43 @@ describe("the base template", () => {
     expect(workspaceRoot).toContain("pnpm-workspace.yaml");
     expect(workspaceRoot).toContain("turbo.json");
     expect(workspaceRoot).toContain(".github");
+    expect(workspaceRoot).toContain("apps");
+  });
+
+  it("scopes generated package names and CSS token names using the answered values", async () => {
+    await renderTemplate({
+      templateRoot,
+      targetDir,
+      variables: {
+        projectName: "acme-design-system",
+        packageScope: "@acme",
+        tokenPrefix: "fd",
+      },
+    });
+
+    const tokensPkg = JSON.parse(
+      await readFile(path.join(targetDir, "packages/tokens/package.json"), "utf8"),
+    ) as { name: string };
+    expect(tokensPkg.name).toBe("@acme/tokens");
+
+    const reactPkg = JSON.parse(
+      await readFile(path.join(targetDir, "packages/react/package.json"), "utf8"),
+    ) as { name: string; dependencies: Record<string, string> };
+    expect(reactPkg.name).toBe("@acme/react");
+    expect(reactPkg.dependencies["@acme/tokens"]).toBe("workspace:*");
+
+    const tokensCss = await readFile(
+      path.join(targetDir, "packages/tokens/src/tokens.css"),
+      "utf8",
+    );
+    expect(tokensCss).toContain("--fd-color-primary");
+    expect(tokensCss).not.toContain("--{{");
+
+    const buttonSource = await readFile(
+      path.join(targetDir, "packages/react/src/Button/Button.tsx"),
+      "utf8",
+    );
+    expect(buttonSource).toContain("forwardRef");
+    expect(buttonSource).toContain("aria-busy");
   });
 });

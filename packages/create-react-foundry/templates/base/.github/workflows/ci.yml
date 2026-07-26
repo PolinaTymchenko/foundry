@@ -22,8 +22,18 @@ jobs:
 
       - run: pnpm lint
 
+      - run: pnpm format:check
+
       - run: pnpm typecheck
 
       - run: pnpm build
 
       - run: pnpm test
+
+      - run: npx playwright install --with-deps chromium
+
+      - name: Accessibility check (Storybook + axe)
+        run: |
+          pnpm --filter "{{packageScope}}/storybook" dev &
+          npx wait-on http://localhost:6006 --timeout 60000
+          pnpm --filter "{{packageScope}}/storybook" test:a11y

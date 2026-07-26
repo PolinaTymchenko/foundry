@@ -1,0 +1,30 @@
+{
+  "name": "{{packageScope}}/storybook",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "storybook dev -p 6006 --ci",
+    "build": "storybook build -o dist",
+    "test:a11y": "test-storybook --url http://localhost:6006",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "{{packageScope}}/react": "workspace:*",
+    "{{packageScope}}/tokens": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^8.4.7",
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/react": "^8.4.7",
+    "@storybook/react-vite": "^8.4.7",
+    "@storybook/test-runner": "^0.19.1",
+    "axe-playwright": "^2.0.3",
+    "storybook": "^8.4.7",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11"
+  }
+}
