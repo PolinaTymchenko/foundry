@@ -1,6 +1,6 @@
 import { forwardRef, useId, type InputHTMLAttributes, type ReactNode } from "react";
-import { warnIfMissingAccessibleName } from "../internal/a11y.js";
-import { useControlledState } from "../internal/useControlledState.js";
+import { warnIfMissingAccessibleName } from "../../internal/a11y.js";
+import { useControlledState } from "../../internal/useControlledState.js";
 import styles from "./Input.module.css";
 
 export type InputSize = "sm" | "md" | "lg";

@@ -1,6 +1,9 @@
 # 0003 — Folder Structure
 
-**Status:** Accepted
+**Status:** Superseded by [0005](./0005-category-folders.md) — components now
+live under a category subfolder (`packages/react/src/Atoms/ComponentName/`),
+not directly under `src/`. Everything else in this ADR (barrel export rules,
+`internal/`, component "existence") still holds.
 
 ## Context
 

@@ -1,5 +1,5 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
-import { warnIfMissingAccessibleName } from "../internal/a11y.js";
+import { warnIfMissingAccessibleName } from "../../internal/a11y.js";
 import styles from "./Button.module.css";
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";

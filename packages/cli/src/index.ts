@@ -67,7 +67,7 @@ async function main(): Promise<void> {
   try {
     const { answers, targetDir, filesWritten } = await runGenerator({
       definition,
-      targetDir: (a) => path.join(reactSrcDir, a.componentName),
+      targetDir: (a) => path.join(reactSrcDir, a.category, a.componentName),
       initialAnswers: {
         tokenPrefix,
         ...(name ? { componentName: name } : {}),

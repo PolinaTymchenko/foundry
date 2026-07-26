@@ -16,11 +16,11 @@ describe("updateBarrelExports", () => {
   });
 
   it("creates the barrel file if it doesn't exist yet", async () => {
-    await updateBarrelExports(reactSrcDir, "Card");
+    await updateBarrelExports(reactSrcDir, "Atoms", "Card");
 
     const content = await readFile(path.join(reactSrcDir, "index.ts"), "utf8");
     expect(content).toBe(
-      'export { Card } from "./Card/index.js";\nexport type { CardProps } from "./Card/index.js";\n',
+      'export { Card } from "./Atoms/Card/index.js";\nexport type { CardProps } from "./Atoms/Card/index.js";\n',
     );
   });
 
@@ -28,20 +28,20 @@ describe("updateBarrelExports", () => {
     await mkdir(reactSrcDir, { recursive: true });
     await writeFile(
       path.join(reactSrcDir, "index.ts"),
-      'export { Button } from "./Button/index.js";\nexport type { ButtonProps } from "./Button/index.js";\n',
+      'export { Button } from "./Atoms/Button/index.js";\nexport type { ButtonProps } from "./Atoms/Button/index.js";\n',
     );
 
-    await updateBarrelExports(reactSrcDir, "Card");
+    await updateBarrelExports(reactSrcDir, "Molecules", "Card");
 
     const content = await readFile(path.join(reactSrcDir, "index.ts"), "utf8");
-    expect(content).toContain('export { Button } from "./Button/index.js";');
-    expect(content).toContain('export { Card } from "./Card/index.js";');
-    expect(content).toContain('export type { CardProps } from "./Card/index.js";');
+    expect(content).toContain('export { Button } from "./Atoms/Button/index.js";');
+    expect(content).toContain('export { Card } from "./Molecules/Card/index.js";');
+    expect(content).toContain('export type { CardProps } from "./Molecules/Card/index.js";');
   });
 
   it("is idempotent — running it twice for the same component doesn't duplicate lines", async () => {
-    await updateBarrelExports(reactSrcDir, "Card");
-    await updateBarrelExports(reactSrcDir, "Card");
+    await updateBarrelExports(reactSrcDir, "Atoms", "Card");
+    await updateBarrelExports(reactSrcDir, "Atoms", "Card");
 
     const content = await readFile(path.join(reactSrcDir, "index.ts"), "utf8");
     expect(content.match(/export \{ Card \}/g)).toHaveLength(1);

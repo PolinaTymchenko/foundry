@@ -2,7 +2,12 @@ import { mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { finalizeLicense, installWithPnpm, isCommandNotFound } from "../hooks.js";
+import {
+  deriveDefaultPackageScope,
+  finalizeLicense,
+  installWithPnpm,
+  isCommandNotFound,
+} from "../hooks.js";
 
 function enoent(): NodeJS.ErrnoException {
   const error = new Error("spawn ENOENT") as NodeJS.ErrnoException;
@@ -53,6 +58,16 @@ describe("installWithPnpm", () => {
     const runFn = vi.fn().mockRejectedValue(new Error("pnpm install exited with code 1"));
 
     await expect(installWithPnpm("/some/dir", runFn)).rejects.toThrow("exited with code 1");
+  });
+});
+
+describe("deriveDefaultPackageScope", () => {
+  it("uses the first hyphen-separated word of the project name", () => {
+    expect(deriveDefaultPackageScope("acme-design-system")).toBe("@acme");
+  });
+
+  it("works for a project name with no hyphens", () => {
+    expect(deriveDefaultPackageScope("mydesignsystem")).toBe("@mydesignsystem");
   });
 });
 

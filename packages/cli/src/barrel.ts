@@ -14,6 +14,7 @@ import path from "node:path";
  */
 export async function updateBarrelExports(
   reactSrcDir: string,
+  category: string,
   componentName: string,
 ): Promise<void> {
   const barrelPath = path.join(reactSrcDir, "index.ts");
@@ -25,7 +26,7 @@ export async function updateBarrelExports(
     existing = "";
   }
 
-  const importPath = `./${componentName}/index.js`;
+  const importPath = `./${category}/${componentName}/index.js`;
   if (existing.includes(`from "${importPath}"`)) {
     return;
   }

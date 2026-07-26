@@ -1,6 +1,11 @@
 export interface ProjectAnswers extends Record<string, unknown> {
   projectName: string;
-  /** npm scope the generated packages publish under, e.g. "@acme". */
+  /**
+   * npm scope the generated packages publish under, e.g. "@acme". Not a
+   * prompt — resolved from --package-scope if given, otherwise derived from
+   * projectName in hooks.ts's beforeRender, since most projects never
+   * publish anywhere and don't need to be asked.
+   */
   packageScope: string;
   /**
    * Namespace for generated CSS custom properties, e.g. "fd" → --fd-color-primary.

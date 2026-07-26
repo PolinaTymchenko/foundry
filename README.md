@@ -77,13 +77,16 @@ Storybook instance, and CI, then starts Storybook with both components:
 variants, sizes, loading and disabled states, controlled and uncontrolled form
 behavior, and a passing accessibility check.
 
-You'll be asked three questions (or skip them with flags, below):
+You'll be asked two questions (or skip them with flags, below):
 
 | Prompt | What it controls | Default |
 | --- | --- | --- |
 | Project name | Directory name and root package name | `my-design-system` |
-| Package scope | Publishes as `{scope}/react`, `{scope}/tokens` | `@` + first word of the project name |
 | Initialize a git repository? | Runs `git init` after scaffolding | Yes |
+
+Package scope (`{scope}/react`, `{scope}/tokens`) isn't asked, since most
+projects never publish anywhere. It defaults to `@` + the first word of the
+project name; override it with `--package-scope` if you do plan to publish.
 
 Non-interactive, for scripts or CI:
 
@@ -128,22 +131,25 @@ pnpm generate component Card
 ```
 
 You'll be asked for a category (Atom, Molecule, Organism, or Template). This
-groups the component in Storybook's sidebar; it doesn't change the generated
-code. Skip the prompt with a flag:
+groups the component in Storybook's sidebar and picks which folder it's
+generated under; every category produces the same generated component
+shape. Skip the prompt with a flag:
 
 ```bash
 pnpm generate component Card --category=molecule
 ```
 
-Either way, this creates `packages/react/src/Card/`:
+Either way, this creates `packages/react/src/Molecules/Card/` (the category
+folder is created too, if it doesn't already exist):
 
 ```
-Card/
-├── Card.tsx          # forwardRef, follows docs/adr conventions
-├── Card.module.css   # scoped styles against your project's tokens
-├── Card.stories.tsx  # auto-discovered by Storybook
-├── Card.test.tsx     # Vitest + Testing Library, ready to extend
-└── index.ts
+Molecules/
+└── Card/
+    ├── Card.tsx          # forwardRef, follows docs/adr conventions
+    ├── Card.module.css   # scoped styles against your project's tokens
+    ├── Card.stories.tsx  # auto-discovered by Storybook
+    ├── Card.test.tsx     # Vitest + Testing Library, ready to extend
+    └── index.ts
 ```
 
 ...and updates `packages/react/src/index.ts` so the new component is exported
@@ -203,10 +209,10 @@ npm publish --access public   # omit --access public for a private registry/scop
 
 Before your first publish:
 
-- The package scope you chose during scaffolding (`--package-scope`, e.g.
-  `@acme`) needs to be an npm user or organization you own. Foundry names the
-  packages `{scope}/react` and `{scope}/tokens`; it doesn't create the scope
-  on npm's side.
+- The package scope (auto-derived from the project name, or set with
+  `--package-scope`, e.g. `@acme`) needs to be an npm user or organization you
+  own. Foundry names the packages `{scope}/react` and `{scope}/tokens`; it
+  doesn't create the scope on npm's side.
 - You'll need to be logged in (`npm login`) or have `NODE_AUTH_TOKEN` set in
   CI, same as publishing any npm package.
 - v0.1 doesn't set up an automated release pipeline (changesets, versioning,

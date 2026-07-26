@@ -84,14 +84,14 @@ describe("the base template", () => {
     expect(tokensCss).not.toContain("--{{");
 
     const buttonSource = await readFile(
-      path.join(targetDir, "packages/react/src/Button/Button.tsx"),
+      path.join(targetDir, "packages/react/src/Atoms/Button/Button.tsx"),
       "utf8",
     );
     expect(buttonSource).toContain("forwardRef");
     expect(buttonSource).toContain("aria-busy");
 
     const inputSource = await readFile(
-      path.join(targetDir, "packages/react/src/Input/Input.tsx"),
+      path.join(targetDir, "packages/react/src/Atoms/Input/Input.tsx"),
       "utf8",
     );
     expect(inputSource).toContain("useControlledState");

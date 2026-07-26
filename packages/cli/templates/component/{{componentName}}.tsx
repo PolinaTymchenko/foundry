@@ -1,5 +1,5 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
-import { warnIfMissingAccessibleName } from "../internal/a11y.js";
+import { warnIfMissingAccessibleName } from "../../internal/a11y.js";
 import styles from "./{{componentName}}.module.css";
 
 export interface {{componentName}}Props extends HTMLAttributes<HTMLDivElement> {

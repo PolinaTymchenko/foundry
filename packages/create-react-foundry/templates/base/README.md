@@ -15,8 +15,8 @@ pnpm dev
 ```
 
 Opens Storybook at http://localhost:6006 with Button and Input already
-there. Edit `packages/react/src/Button/Button.tsx` (or `Input/Input.tsx`)
-and Storybook updates live.
+there. Edit `packages/react/src/Atoms/Button/Button.tsx` (or
+`Atoms/Input/Input.tsx`) and Storybook updates live.
 
 ```
 pnpm build       # builds every package
@@ -36,14 +36,15 @@ skip it.
 pnpm generate component Card
 ```
 
-Asks for a category (Atom, Molecule, Organism, Template) to group it in
-Storybook's sidebar, then generates
-`packages/react/src/Card/{Card.tsx, Card.module.css, Card.stories.tsx, Card.test.tsx, index.ts}`
-and adds `Card` to `packages/react/src/index.ts` automatically. The
-generated component is a minimal starting point that follows the project's
-conventions; pick the right root element and props for what it does. Look
-at `Button.tsx` and `Input.tsx` for the two shapes (stateless vs.
-controlled) most components will follow.
+Asks for a category (Atom, Molecule, Organism, Template), creating the
+category folder if it doesn't exist yet, then generates
+`packages/react/src/Atoms/Card/{Card.tsx, Card.module.css, Card.stories.tsx, Card.test.tsx, index.ts}`
+(substituting whichever category you picked) and adds `Card` to
+`packages/react/src/index.ts` automatically. The generated component is a
+minimal starting point that follows the project's conventions; pick the
+right root element and props for what it does. Look at `Button.tsx` and
+`Input.tsx` for the two shapes (stateless vs. controlled) most components
+will follow.
 
 ## Using the component library elsewhere
 

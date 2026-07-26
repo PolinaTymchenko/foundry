@@ -5,7 +5,14 @@ import { updateBarrelExports } from "../barrel.js";
 
 export interface ComponentAnswers extends Record<string, unknown> {
   componentName: string;
-  /** The Storybook title-grouping segment ("Atoms", "Molecules", ...) — see docs/adr, category is metadata, not an archetype. */
+  /**
+   * Both the Storybook title-grouping segment ("Atoms", "Molecules", ...)
+   * and the folder the component is generated under
+   * (packages/react/src/{category}/{componentName}/) — see docs/adr. It's
+   * still not an archetype: every category produces the same generic
+   * component shape, just filed under a different folder and Storybook
+   * section.
+   */
   category: string;
   /** Not a question — read from foundry.config.ts and injected by the caller. */
   tokenPrefix: string;
@@ -58,7 +65,7 @@ export function createComponentGenerator({
     template: { root: templateRoot },
     hooks: {
       async afterRender(ctx) {
-        await updateBarrelExports(reactSrcDir, ctx.answers.componentName);
+        await updateBarrelExports(reactSrcDir, ctx.answers.category, ctx.answers.componentName);
       },
     },
   };

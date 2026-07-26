@@ -85,7 +85,25 @@ export async function finalizeLicense(targetDir: string, license: string): Promi
   }
 }
 
+/**
+ * Most people scaffolding a design system never publish it anywhere, so
+ * package scope isn't worth a prompt — it's derived from the project name
+ * (the first hyphen-separated word, prefixed with "@") unless --package-scope
+ * was given. Templates still need a real value to substitute, so this runs
+ * before rendering rather than being asked.
+ */
+export function deriveDefaultPackageScope(projectName: string): string {
+  const base = projectName.split("-")[0];
+  return `@${base}`;
+}
+
 export const projectHooks: GeneratorHooks<ProjectAnswers> = {
+  async beforeRender(ctx: GeneratorContext<ProjectAnswers>) {
+    if (!ctx.answers.packageScope) {
+      ctx.answers.packageScope = deriveDefaultPackageScope(ctx.answers.projectName);
+    }
+  },
+
   async afterRender(ctx: GeneratorContext<ProjectAnswers>) {
     await finalizeLicense(ctx.targetDir, ctx.answers.license);
 

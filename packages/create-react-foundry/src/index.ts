@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import * as clack from "@clack/prompts";
 import { parseFlag, reportGeneratorError, runGenerator } from "@foundryui/generator-core";
 import { projectHooks } from "./hooks.js";
-import { projectQuestions } from "./prompts.js";
+import { projectQuestions, SCOPE_PATTERN } from "./prompts.js";
 import type { ProjectAnswers } from "./types.js";
 
 const packageRoot = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -40,6 +40,14 @@ async function main(): Promise<void> {
   const license = LICENSE_SPDX[licenseKey];
   if (!license) {
     clack.log.error(`--license "${licenseKey}" is not supported. Use "apache-2.0" or "mit".`);
+    process.exitCode = 1;
+    return;
+  }
+
+  if (packageScope && !SCOPE_PATTERN.test(packageScope)) {
+    clack.log.error(
+      `--package-scope "${packageScope}" is invalid. Use an npm scope starting with "@", e.g. "@acme".`,
+    );
     process.exitCode = 1;
     return;
   }
