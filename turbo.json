@@ -8,7 +8,7 @@
     },
     "test": {
       "dependsOn": ["build"],
-      "inputs": ["src/**", "package.json"],
+      "inputs": ["src/**", "templates/**", "package.json"],
       "outputs": []
     },
     "lint": {

@@ -2,7 +2,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import * as clack from "@clack/prompts";
-import { parseFlag, PromptCancelledError, runGenerator } from "@foundryui/generator-core";
+import { parseFlag, reportGeneratorError, runGenerator } from "@foundryui/generator-core";
 import { projectHooks } from "./hooks.js";
 import { projectQuestions } from "./prompts.js";
 import type { ProjectAnswers } from "./types.js";
@@ -76,13 +76,7 @@ async function main(): Promise<void> {
       ].join("\n"),
     );
   } catch (error) {
-    if (error instanceof PromptCancelledError) {
-      clack.cancel("Cancelled.");
-      process.exitCode = 1;
-      return;
-    }
-    clack.log.error(error instanceof Error ? error.message : String(error));
-    process.exitCode = 1;
+    reportGeneratorError(error);
   }
 }
 

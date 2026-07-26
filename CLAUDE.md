@@ -7,38 +7,73 @@ not drift.
 
 ## What this repository is, right now
 
-Two packages exist. Nothing else — no React, no tokens, no component
-generator yet. Do not assume any of those exist when reading or writing code
-here.
+Three packages, plus a template tree with a real component library inside
+it. Milestone 3 (the artifact generator) is complete; publishing is not —
+see the root README's "Publishing status" section before assuming
+`@foundryui/cli` or `@foundryui/generator-core` are installable from npm.
 
 - `packages/generator-core` — a framework-agnostic engine: runs interactive
   prompts, renders a template directory into a target directory with
   `{{variable}}` substitution in both file contents and file/directory names,
   and calls `beforeRender`/`afterRender` lifecycle hooks. It knows nothing
   about "projects" or "components" — those are just different
-  `GeneratorDefinition`s built on top of it.
+  `GeneratorDefinition`s built on top of it. Also exports small CLI-only
+  helpers (`parseFlag`, error reporting) shared by both CLIs below, so
+  neither reimplements them.
 - `packages/create-react-foundry` — the actual `create-react-foundry` npm
   package (published name is load-bearing: `npm create react-foundry` only
-  works if the package is literally named `create-react-foundry`). It's the
-  first, and currently only, consumer of `generator-core`. Its template lives
-  at `packages/create-react-foundry/templates/base`.
+  works if the package is literally named `create-react-foundry`). Scaffolds
+  a new project once. Its template lives at
+  `packages/create-react-foundry/templates/base` — a real, working
+  component library (tokens, Button, Input, Storybook, CI), not a stub.
+- `packages/cli` — the `@foundryui/cli` package, bin name `foundry`. The
+  ongoing, in-project CLI a scaffolded project depends on afterward.
+  `foundry generate component <Name>` is the only registered artifact type;
+  `packages/cli/src/generators/index.ts` is where a second type gets added.
+
+## Conventions the generated component library follows
+
+Documented as ADRs in `docs/adr/` — component API shape, styling, folder
+structure, testing strategy. These govern what `packages/cli`'s generator
+produces; read them before changing the generator or hand-editing Button
+or Input in the template.
 
 ## Hard rules
 
-- `packages/generator-core` must never import from `packages/create-react-foundry`
-  (or any future CLI/generator package). Enforced by `.dependency-cruiser.cjs`
-  and `pnpm lint:deps` — a violation is a build failure, not a lint warning
-  to ignore.
-- Files under any `templates/` directory are not TypeScript/JSON to be linted
-  or type-checked as-is — they contain literal `{{variable}}` placeholders.
-  They're excluded from ESLint and TypeScript project references on purpose.
+- `packages/generator-core` must never import from any of its own consumers
+  (`packages/create-react-foundry`, `packages/cli`, or any future CLI).
+  Enforced by `.dependency-cruiser.cjs` and `pnpm lint:deps` — a violation
+  is a build failure, not a lint warning to ignore.
+- Files under any `templates/` directory are not TypeScript/JSON/CSS to be
+  linted, formatted, or type-checked as-is — they contain literal
+  `{{variable}}` placeholders. Excluded from ESLint, Biome, and TypeScript
+  project references on purpose (see the `templates/**` ignores in the
+  root `eslint.config.js` and `biome.json`).
 - Biome formats. ESLint lints. Don't reach for Prettier, and don't enable
   Biome's linter.
-- NodeNext module resolution is in effect — relative imports need explicit
-  `.js` extensions in source even though the files are `.ts`.
+- Module resolution is not uniform across this repo, deliberately: Node-
+  executed packages (`generator-core`, `create-react-foundry`, `cli`) use
+  `NodeNext`, inherited from the root `tsconfig.base.json`. Bundler-consumed
+  packages — `packages/react` inside the template, and its `apps/storybook`
+  — override to `Bundler` resolution. Getting this backwards produces real,
+  confusing type errors (this happened once, against
+  `@testing-library/user-event`'s dual CJS/ESM exports) — check which
+  category a new package falls into before copying a neighboring
+  `tsconfig.json`.
+- `packages/react` inside the template builds with Vite in library mode,
+  not tsup — tsup cannot be made to actually scope CSS Modules class names
+  (confirmed empirically, not assumed; see the comment in
+  `packages/create-react-foundry/templates/base/packages/react/vite.config.ts`).
+  `packages/tokens` and Foundry's own packages have no CSS and stay on tsup.
 
 ## Commands
 
-`pnpm build` / `pnpm test` / `pnpm lint` / `pnpm typecheck` — all run via
-Turborepo across every package. `pnpm lint:deps` runs the architectural
-boundary check separately (it's repo-wide, not per-package).
+`pnpm build` / `pnpm test` / `pnpm lint` / `pnpm typecheck` / `pnpm format:check`
+— all run via Turborepo across every package. `pnpm lint:deps` runs the
+architectural boundary check separately (it's repo-wide, not per-package).
+
+Testing a template change end to end requires a real scaffold — `renderTemplate`
+unit tests catch substitution bugs, but CSS Modules scoping, Storybook
+builds, and the axe a11y gate only get exercised by actually generating a
+project and running its pipeline. Do that before considering a template
+change done, the same way every milestone so far has.

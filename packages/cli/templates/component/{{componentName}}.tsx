@@ -11,27 +11,28 @@ export interface {{componentName}}Props extends HTMLAttributes<HTMLDivElement> {
  * shape, and behavior here are a deliberately neutral starting point, not
  * a finished component — pick the right semantic element (button, input,
  * ...) for what {{componentName}} actually does, and extend
- * {{componentName}}Props accordingly. See docs/adr/0001 for the naming
- * conventions the rest of the library follows once you do.
+ * {{componentName}}Props accordingly. Match the conventions the rest of
+ * the library already follows: variant/size for style axes, native prop
+ * names for native behavior (disabled, required, ...), forwardRef always,
+ * value/defaultValue/onChange via useControlledState for anything with
+ * controlled state — see Button and Input for the two shapes in practice.
  */
-export const {{componentName}} = forwardRef<HTMLDivElement, {{componentName}}Props>(
-  function {{componentName}}(
-    { children, className, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...rest },
-    ref,
-  ) {
-    warnIfMissingAccessibleName({
-      component: "{{componentName}}",
-      hasAccessibleContent: Boolean(children),
-      ariaLabel,
-      ariaLabelledBy,
-      guidance:
-        'this component has no visible text and needs an accessible name — pass aria-label="..." so assistive technology can announce what it does.',
-    });
+export const {{componentName}} = forwardRef<HTMLDivElement, {{componentName}}Props>(function {{componentName}}(
+  { children, className, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledBy, ...rest },
+  ref,
+) {
+  warnIfMissingAccessibleName({
+    component: "{{componentName}}",
+    hasAccessibleContent: Boolean(children),
+    ariaLabel,
+    ariaLabelledBy,
+    guidance:
+      'this component has no visible text and needs an accessible name — pass aria-label="..." so assistive technology can announce what it does.',
+  });
 
-    return (
-      <div {...rest} ref={ref} className={[styles.root, className].filter(Boolean).join(" ")}>
-        {children}
-      </div>
-    );
-  },
-);
+  return (
+    <div {...rest} ref={ref} className={[styles.root, className].filter(Boolean).join(" ")}>
+      {children}
+    </div>
+  );
+});

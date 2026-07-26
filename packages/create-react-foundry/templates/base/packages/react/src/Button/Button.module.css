@@ -1,9 +1,8 @@
 /**
- * CSS Module — see docs/adr/0002-styling-conventions.md. Class names are
- * scoped by the build tool; variant/size styling is expressed through the
- * data-* attributes Button already sets, not through per-variant classes.
- * Every value below comes from a design token — no hardcoded colors,
- * spacing, or type sizes.
+ * CSS Module — class names are scoped by the build tool; variant/size
+ * styling is expressed through the data-* attributes Button already sets,
+ * not through per-variant classes. Every value below comes from a design
+ * token — no hardcoded colors, spacing, or type sizes.
  */
 
 .button {

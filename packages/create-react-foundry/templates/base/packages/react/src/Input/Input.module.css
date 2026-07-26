@@ -1,6 +1,6 @@
 /**
- * CSS Module — see docs/adr/0002-styling-conventions.md. Every value comes
- * from a design token.
+ * CSS Module — class names are scoped by the build tool. Every value
+ * below comes from a design token, not a hardcoded number or color.
  */
 
 .field {

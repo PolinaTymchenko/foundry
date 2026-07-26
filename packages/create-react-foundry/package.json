@@ -4,6 +4,9 @@
   "description": "Scaffold a new Foundry-based project. Run with: npm create react-foundry",
   "license": "Apache-2.0",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "bin": {
     "create-react-foundry": "./dist/index.js"
   },

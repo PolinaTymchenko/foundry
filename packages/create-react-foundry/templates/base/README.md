@@ -1,6 +1,6 @@
 # {{projectName}}
 
-Scaffolded with [Foundry](https://github.com/foundry-ui/foundry).
+Scaffolded with Foundry.
 
 ## What's here
 
@@ -29,6 +29,21 @@ Accessibility is checked two ways: `eslint-plugin-jsx-a11y` at write time, and
 `pnpm --filter {{packageScope}}/storybook test:a11y` (Storybook's test runner
 + axe) against every story — the same check CI runs on every PR. There's no
 flag to skip it.
+
+## Adding a new component
+
+```
+pnpm generate component Card
+```
+
+Asks for a category (Atom, Molecule, Organism, Template — used to group it
+in Storybook's sidebar), then generates
+`packages/react/src/Card/{Card.tsx, Card.module.css, Card.stories.tsx, Card.test.tsx, index.ts}`
+and adds `Card` to `packages/react/src/index.ts` automatically. The
+generated component is a deliberately minimal, convention-following
+starting point — pick the right root element and props for what it
+actually does. Look at `Button.tsx` and `Input.tsx` for the two shapes
+(stateless vs. controlled) most components will follow.
 
 ## Using the component library elsewhere
 

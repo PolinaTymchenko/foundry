@@ -2,7 +2,7 @@
 import { access } from "node:fs/promises";
 import path from "node:path";
 import * as clack from "@clack/prompts";
-import { parseFlag, PromptCancelledError, runGenerator } from "@foundryui/generator-core";
+import { parseFlag, reportGeneratorError, runGenerator } from "@foundryui/generator-core";
 import { readFoundryConfig } from "./config.js";
 import { artifactGenerators, isArtifactType } from "./generators/index.js";
 
@@ -86,13 +86,7 @@ async function main(): Promise<void> {
       `${answers.componentName} is ready — ${path.relative(projectRoot, path.join(targetDir, `${answers.componentName}.tsx`))}`,
     );
   } catch (error) {
-    if (error instanceof PromptCancelledError) {
-      clack.cancel("Cancelled.");
-      process.exitCode = 1;
-      return;
-    }
-    clack.log.error(error instanceof Error ? error.message : String(error));
-    process.exitCode = 1;
+    reportGeneratorError(error);
   }
 }
 
