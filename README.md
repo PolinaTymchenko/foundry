@@ -12,6 +12,8 @@ It isn't a copy-paste starter kit and it isn't a UI kit you theme. It's the
 tool platform teams use to stand up their *own* component library, the one
 their product teams will depend on for years.
 
+![Scaffolding a project with npm create react-foundry, then generating a new Card component with foundry generate — Storybook picks up both automatically](.github/media/demo.gif)
+
 **Status: v0.1, pre-publish.** Everything below is real and verified against
 a fresh scaffold — see [Verifying this yourself](#verifying-this-yourself).
 The one step not yet done is the actual `npm publish` of the three packages
@@ -147,16 +149,24 @@ Either way, this creates `packages/react/src/Card/`:
 
 ```
 Card/
-├── Card.tsx            # forwardRef, follows docs/adr conventions
-├── Card.module.css      # scoped styles against your project's tokens
-├── Card.stories.tsx     # auto-discovered by Storybook
-├── Card.test.tsx        # Vitest + Testing Library, ready to extend
+├── Card.tsx          # forwardRef, follows docs/adr conventions
+├── Card.module.css   # scoped styles against your project's tokens
+├── Card.stories.tsx  # auto-discovered by Storybook
+├── Card.test.tsx     # Vitest + Testing Library, ready to extend
 └── index.ts
 ```
 
 ...and updates `packages/react/src/index.ts` automatically — the new
 component is exported and usable immediately, with nothing to register by
 hand.
+
+If Storybook is already running (`pnpm dev` in another terminal) when you
+generate a component, restart it (`Ctrl+C`, then `pnpm dev` again) — Storybook's
+dev server reliably picks up brand-new story files on a fresh start, but hot
+reload alone can occasionally leave a just-added story showing an
+`importers[path] is not a function` error until you do. This is a Storybook/Vite
+dev-server limitation with newly-created files, not a Foundry-specific bug —
+verified by reproducing it and confirming a restart resolves it cleanly.
 
 ## Storybook
 
@@ -179,7 +189,7 @@ browser-driven accessibility scan, not a static lint rule.
 ## Testing
 
 ```bash
-pnpm test          # Vitest + React Testing Library, every package
+pnpm test           # Vitest + React Testing Library, every package
 pnpm lint           # ESLint, including eslint-plugin-jsx-a11y
 pnpm typecheck      # tsc --noEmit, every package
 pnpm format:check   # Biome

@@ -21,13 +21,13 @@ field — run through Corepack if you don't have it: `corepack enable`).
 Useful commands while developing:
 
 ```bash
-pnpm build          # every package, via Turborepo
-pnpm test            # every package's test suite
-pnpm lint             # ESLint
-pnpm lint:deps        # dependency-cruiser — architectural boundaries
-pnpm typecheck        # tsc --noEmit, every package
-pnpm format:check     # Biome
-pnpm format           # Biome, writing fixes
+pnpm build         # every package, via Turborepo
+pnpm test          # every package's test suite
+pnpm lint          # ESLint
+pnpm lint:deps     # dependency-cruiser — architectural boundaries
+pnpm typecheck     # tsc --noEmit, every package
+pnpm format:check  # Biome
+pnpm format        # Biome, writing fixes
 ```
 
 All of these run per-package via Turborepo and are cached on content hashes,
