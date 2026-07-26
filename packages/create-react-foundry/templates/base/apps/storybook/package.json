@@ -2,6 +2,7 @@
   "name": "{{packageScope}}/storybook",
   "version": "0.1.0",
   "private": true,
+  "license": "{{license}}",
   "type": "module",
   "scripts": {
     "dev": "storybook dev -p 6006 --ci",

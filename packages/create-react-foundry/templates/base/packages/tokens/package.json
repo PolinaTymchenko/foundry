@@ -2,6 +2,7 @@
   "name": "{{packageScope}}/tokens",
   "version": "0.1.0",
   "private": false,
+  "license": "{{license}}",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

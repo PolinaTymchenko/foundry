@@ -1,5 +1,6 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
-import "./Button.css";
+import { warnIfMissingAccessibleName } from "../internal/a11y.js";
+import styles from "./Button.module.css";
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg";
@@ -46,16 +47,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   },
   ref,
 ) {
-  if (process.env.NODE_ENV !== "production" && !children && !ariaLabel && !ariaLabelledBy) {
-    console.warn(
-      "Button: an icon-only button (no visible text) needs an accessible name — " +
-        'pass aria-label="..." so assistive technology can announce what it does.',
-    );
-  }
+  warnIfMissingAccessibleName({
+    component: "Button",
+    hasAccessibleContent: Boolean(children),
+    ariaLabel,
+    ariaLabelledBy,
+    guidance:
+      'an icon-only button (no visible text) needs an accessible name — pass aria-label="..." so assistive technology can announce what it does.',
+  });
 
-  const classNames = ["fd-button", `fd-button--${variant}`, `fd-button--${size}`, className]
-    .filter(Boolean)
-    .join(" ");
+  const classNames = [styles.button, className].filter(Boolean).join(" ");
 
   return (
     <button
@@ -74,13 +75,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       {loading ? (
         <ButtonSpinner />
       ) : iconStart ? (
-        <span className="fd-button__icon" aria-hidden="true">
+        <span className={styles.icon} aria-hidden="true">
           {iconStart}
         </span>
       ) : null}
-      {children ? <span className="fd-button__label">{children}</span> : null}
+      {children ? <span className={styles.label}>{children}</span> : null}
       {!loading && iconEnd ? (
-        <span className="fd-button__icon" aria-hidden="true">
+        <span className={styles.icon} aria-hidden="true">
           {iconEnd}
         </span>
       ) : null}
@@ -91,7 +92,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 function ButtonSpinner() {
   return (
     <svg
-      className="fd-button__spinner"
+      className={styles.spinner}
       viewBox="0 0 24 24"
       width="1em"
       height="1em"

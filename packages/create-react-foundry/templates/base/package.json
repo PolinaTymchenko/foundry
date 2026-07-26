@@ -2,6 +2,7 @@
   "name": "{{projectName}}",
   "private": true,
   "version": "0.0.0",
+  "license": "{{license}}",
   "type": "module",
   "packageManager": "pnpm@9.15.9",
   "engines": {

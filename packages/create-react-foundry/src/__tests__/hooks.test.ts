@@ -1,5 +1,8 @@
-import { describe, expect, it, vi } from "vitest";
-import { installWithPnpm, isCommandNotFound } from "../hooks.js";
+import { mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { finalizeLicense, installWithPnpm, isCommandNotFound } from "../hooks.js";
 
 function enoent(): NodeJS.ErrnoException {
   const error = new Error("spawn ENOENT") as NodeJS.ErrnoException;
@@ -50,5 +53,39 @@ describe("installWithPnpm", () => {
     const runFn = vi.fn().mockRejectedValue(new Error("pnpm install exited with code 1"));
 
     await expect(installWithPnpm("/some/dir", runFn)).rejects.toThrow("exited with code 1");
+  });
+});
+
+describe("finalizeLicense", () => {
+  let targetDir: string;
+
+  beforeEach(async () => {
+    targetDir = await mkdtemp(path.join(os.tmpdir(), "foundry-license-test-"));
+    await writeFile(path.join(targetDir, "LICENSE-APACHE-2.0"), "apache text");
+    await writeFile(path.join(targetDir, "LICENSE-MIT"), "mit text");
+  });
+
+  afterEach(async () => {
+    await rm(targetDir, { recursive: true, force: true });
+  });
+
+  it("keeps Apache-2.0 as LICENSE and removes LICENSE-MIT", async () => {
+    await finalizeLicense(targetDir, "Apache-2.0");
+
+    const entries = await readdir(targetDir);
+    expect(entries).toContain("LICENSE");
+    expect(entries).not.toContain("LICENSE-APACHE-2.0");
+    expect(entries).not.toContain("LICENSE-MIT");
+    expect(await readFile(path.join(targetDir, "LICENSE"), "utf8")).toBe("apache text");
+  });
+
+  it("keeps MIT as LICENSE and removes LICENSE-APACHE-2.0", async () => {
+    await finalizeLicense(targetDir, "MIT");
+
+    const entries = await readdir(targetDir);
+    expect(entries).toContain("LICENSE");
+    expect(entries).not.toContain("LICENSE-APACHE-2.0");
+    expect(entries).not.toContain("LICENSE-MIT");
+    expect(await readFile(path.join(targetDir, "LICENSE"), "utf8")).toBe("mit text");
   });
 });

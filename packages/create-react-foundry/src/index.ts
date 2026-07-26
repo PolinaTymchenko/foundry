@@ -12,6 +12,14 @@ const templateRoot = path.join(packageRoot, "templates", "base");
 
 const TOKEN_PREFIX_PATTERN = /^[a-z][a-z0-9-]*$/;
 
+// Keys here are deliberately lowercase and match `license.toLowerCase()`
+// exactly — hooks.ts's finalizeLicense derives the file-selection key back
+// from the SPDX id this way, rather than threading a second field through.
+const LICENSE_SPDX: Record<string, string> = {
+  "apache-2.0": "Apache-2.0",
+  mit: "MIT",
+};
+
 /** Reads --name=value or --name value from argv; undefined if the flag isn't present. */
 function parseFlag(argv: string[], name: string): string | undefined {
   const eqForm = argv.find((arg) => arg.startsWith(`--${name}=`));
@@ -32,11 +40,19 @@ async function main(): Promise<void> {
   const positionalName = argv.find((arg) => !arg.startsWith("-"));
   const tokenPrefix = parseFlag(argv, "token-prefix") ?? "fd";
   const packageScope = parseFlag(argv, "package-scope");
+  const licenseKey = (parseFlag(argv, "license") ?? "apache-2.0").toLowerCase();
 
   if (!TOKEN_PREFIX_PATTERN.test(tokenPrefix)) {
     clack.log.error(
       `--token-prefix "${tokenPrefix}" is invalid. Use lowercase letters, numbers, and hyphens, starting with a letter.`,
     );
+    process.exitCode = 1;
+    return;
+  }
+
+  const license = LICENSE_SPDX[licenseKey];
+  if (!license) {
+    clack.log.error(`--license "${licenseKey}" is not supported. Use "apache-2.0" or "mit".`);
     process.exitCode = 1;
     return;
   }
@@ -52,6 +68,8 @@ async function main(): Promise<void> {
       targetDir: (answers) => path.resolve(process.cwd(), answers.projectName),
       initialAnswers: {
         tokenPrefix,
+        license,
+        currentYear: String(new Date().getFullYear()),
         ...(positionalName ? { projectName: positionalName } : {}),
         ...(packageScope ? { packageScope } : {}),
       },
@@ -64,9 +82,10 @@ async function main(): Promise<void> {
         `  cd ${answers.projectName}`,
         "  pnpm dev",
         "",
-        "That starts Storybook with a real Button component — variants,",
-        "sizes, loading and disabled states, icon slots, and a passing",
-        "accessibility check, ready to look at and modify.",
+        "That starts Storybook with two real components — Button and Input —",
+        "covering variants, loading and disabled states, controlled and",
+        "uncontrolled form state, and a passing accessibility check.",
+        "Ready to look at and modify.",
       ].join("\n"),
     );
   } catch (error) {

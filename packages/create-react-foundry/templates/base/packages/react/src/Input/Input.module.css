@@ -1,0 +1,73 @@
+/**
+ * CSS Module — see docs/adr/0002-styling-conventions.md. Every value comes
+ * from a design token.
+ */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--{{tokenPrefix}}-space-xs);
+  font-family: var(--{{tokenPrefix}}-font-sans);
+}
+
+.label {
+  font-size: var(--{{tokenPrefix}}-text-sm);
+  font-weight: var(--{{tokenPrefix}}-weight-medium);
+  color: var(--{{tokenPrefix}}-color-fg);
+}
+
+.required {
+  color: var(--{{tokenPrefix}}-color-danger);
+}
+
+.input {
+  border: 1px solid var(--{{tokenPrefix}}-color-border);
+  border-radius: var(--{{tokenPrefix}}-radius-md);
+  background-color: var(--{{tokenPrefix}}-color-bg);
+  color: var(--{{tokenPrefix}}-color-fg);
+  font-family: var(--{{tokenPrefix}}-font-sans);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.input:focus-visible {
+  outline: none;
+  box-shadow: var(--{{tokenPrefix}}-focus-ring);
+  border-color: var(--{{tokenPrefix}}-color-primary);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: var(--{{tokenPrefix}}-color-muted);
+}
+
+.input[data-invalid="true"] {
+  border-color: var(--{{tokenPrefix}}-color-danger);
+}
+
+.input[data-size="sm"] {
+  padding: var(--{{tokenPrefix}}-space-xs) var(--{{tokenPrefix}}-space-sm);
+  font-size: var(--{{tokenPrefix}}-text-sm);
+}
+
+.input[data-size="md"] {
+  padding: var(--{{tokenPrefix}}-space-sm) var(--{{tokenPrefix}}-space-md);
+  font-size: var(--{{tokenPrefix}}-text-md);
+}
+
+.input[data-size="lg"] {
+  padding: var(--{{tokenPrefix}}-space-md) var(--{{tokenPrefix}}-space-lg);
+  font-size: var(--{{tokenPrefix}}-text-lg);
+}
+
+.description {
+  font-size: var(--{{tokenPrefix}}-text-sm);
+  color: var(--{{tokenPrefix}}-color-muted-fg);
+  margin: 0;
+}
+
+.error {
+  font-size: var(--{{tokenPrefix}}-text-sm);
+  color: var(--{{tokenPrefix}}-color-danger);
+  margin: 0;
+}

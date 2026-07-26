@@ -1,4 +1,6 @@
 import { spawn } from "node:child_process";
+import { rename, rm } from "node:fs/promises";
+import path from "node:path";
 import * as clack from "@clack/prompts";
 import type { GeneratorContext, GeneratorHooks } from "@foundryui/generator-core";
 import type { ProjectAnswers } from "./types.js";
@@ -60,8 +62,33 @@ export async function installWithPnpm(cwd: string, runFn: RunFn = run): Promise<
   return { ok: false, detail: "" };
 }
 
+const LICENSE_FILES: Record<string, string> = {
+  "apache-2.0": "LICENSE-APACHE-2.0",
+  mit: "LICENSE-MIT",
+};
+
+/**
+ * The template ships both license texts, fully rendered, so this stays a
+ * plain file operation through the same render engine everything else
+ * uses — no special-cased license-writing code path. Whichever license was
+ * chosen becomes LICENSE; the other gets deleted.
+ */
+export async function finalizeLicense(targetDir: string, license: string): Promise<void> {
+  const key = license.toLowerCase();
+  for (const [candidateKey, filename] of Object.entries(LICENSE_FILES)) {
+    const filePath = path.join(targetDir, filename);
+    if (candidateKey === key) {
+      await rename(filePath, path.join(targetDir, "LICENSE"));
+    } else {
+      await rm(filePath);
+    }
+  }
+}
+
 export const projectHooks: GeneratorHooks<ProjectAnswers> = {
   async afterRender(ctx: GeneratorContext<ProjectAnswers>) {
+    await finalizeLicense(ctx.targetDir, ctx.answers.license);
+
     if (ctx.answers.initGit) {
       const gitSpinner = clack.spinner();
       gitSpinner.start("Initializing git repository");
