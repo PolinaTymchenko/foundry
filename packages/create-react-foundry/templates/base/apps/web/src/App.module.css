@@ -1,0 +1,114 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--{{tokenPrefix}}-space-xl);
+  background: var(--{{tokenPrefix}}-color-muted);
+  font-family: var(--{{tokenPrefix}}-font-sans);
+  color: var(--{{tokenPrefix}}-color-fg);
+}
+
+.card {
+  width: 100%;
+  max-width: 40rem;
+  background: var(--{{tokenPrefix}}-color-bg);
+  border: 1px solid var(--{{tokenPrefix}}-color-border);
+  border-radius: var(--{{tokenPrefix}}-radius-lg);
+  padding: var(--{{tokenPrefix}}-space-xl);
+}
+
+.eyebrow {
+  margin: 0 0 var(--{{tokenPrefix}}-space-xs);
+  font-size: var(--{{tokenPrefix}}-text-sm);
+  font-weight: var(--{{tokenPrefix}}-weight-medium);
+  color: var(--{{tokenPrefix}}-color-primary);
+}
+
+.title {
+  margin: 0 0 var(--{{tokenPrefix}}-space-md);
+  font-size: 1.75rem;
+  font-weight: var(--{{tokenPrefix}}-weight-bold);
+}
+
+.lede {
+  margin: 0 0 var(--{{tokenPrefix}}-space-xl);
+  font-size: var(--{{tokenPrefix}}-text-md);
+  color: var(--{{tokenPrefix}}-color-muted-fg);
+}
+
+.lede code {
+  font-family: var(--{{tokenPrefix}}-font-mono);
+  font-size: var(--{{tokenPrefix}}-text-sm);
+}
+
+.demo {
+  padding-top: var(--{{tokenPrefix}}-space-lg);
+  border-top: 1px solid var(--{{tokenPrefix}}-color-border);
+}
+
+.demoHeading {
+  margin: 0 0 var(--{{tokenPrefix}}-space-md);
+  font-size: var(--{{tokenPrefix}}-text-sm);
+  font-weight: var(--{{tokenPrefix}}-weight-medium);
+  color: var(--{{tokenPrefix}}-color-muted-fg);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.demoRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--{{tokenPrefix}}-space-md);
+  margin-bottom: var(--{{tokenPrefix}}-space-lg);
+}
+
+.tanstackLede {
+  margin: 0 0 var(--{{tokenPrefix}}-space-md);
+  font-size: var(--{{tokenPrefix}}-text-sm);
+  color: var(--{{tokenPrefix}}-color-muted-fg);
+}
+
+.tanstackLede code {
+  font-family: var(--{{tokenPrefix}}-font-mono);
+  font-size: var(--{{tokenPrefix}}-text-sm);
+}
+
+.taskForm {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--{{tokenPrefix}}-space-md);
+  margin-bottom: var(--{{tokenPrefix}}-space-lg);
+}
+
+.taskForm > :first-child {
+  flex: 1;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--{{tokenPrefix}}-text-sm);
+}
+
+.table th,
+.table td {
+  padding: var(--{{tokenPrefix}}-space-sm) var(--{{tokenPrefix}}-space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--{{tokenPrefix}}-color-border);
+}
+
+.table th {
+  font-weight: var(--{{tokenPrefix}}-weight-medium);
+  color: var(--{{tokenPrefix}}-color-muted-fg);
+}
+
+.footer {
+  margin: var(--{{tokenPrefix}}-space-lg) 0 0;
+  font-size: var(--{{tokenPrefix}}-text-sm);
+  color: var(--{{tokenPrefix}}-color-muted-fg);
+}
+
+.footer a {
+  color: var(--{{tokenPrefix}}-color-primary);
+}

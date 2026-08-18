@@ -6,6 +6,7 @@ Scaffolded with Foundry.
 
 - `packages/tokens`: design tokens as CSS custom properties (`--{{tokenPrefix}}-*`), plus typed TS exports.
 - `packages/react`: the component library. `Button` and `Input` cover two shapes (a stateless action vs. controlled/uncontrolled form state) that future generated components build on.
+- `apps/web`: the actual app — a Vite + React shell with a welcome page already wired to `packages/react`. Build your project here. The page also includes an optional TanStack Query + Form + Table demo (backed by the mock API in `apps/web/src/api/tasks.ts`) — delete that section, the file, and the three `@tanstack/*` dependencies if you don't want them.
 - `apps/storybook`: the development environment for `packages/react`.
 
 ## Working on this
@@ -14,9 +15,10 @@ Scaffolded with Foundry.
 pnpm dev
 ```
 
-Opens Storybook at http://localhost:6006 with Button and Input already
-there. Edit `packages/react/src/Atoms/Button/Button.tsx` (or
-`Atoms/Input/Input.tsx`) and Storybook updates live.
+Opens the app at http://localhost:5173 (edit `apps/web/src/App.tsx` to start
+building) and Storybook at http://localhost:6006 with Button and Input
+already there. Edit `packages/react/src/Atoms/Button/Button.tsx` (or
+`Atoms/Input/Input.tsx`) and both update live.
 
 ```
 pnpm build       # builds every package
