@@ -7,9 +7,9 @@ file's structure to change wholesale then; that's not drift.
 ## What this repository is, right now
 
 Three packages, plus a template tree with a real component library inside
-it. Milestone 3 (the artifact generator) is complete; publishing is not. See
-the root README's "Publishing status" section before assuming
-`@foundryui/cli` or `@foundryui/generator-core` are installable from npm.
+it. Milestone 3 (the artifact generator) is complete, and all three packages
+are published and installable from npm. See the root README's "Publishing
+status" section for current versions and the release process.
 
 - `packages/generator-core`: a framework-agnostic engine. Runs interactive
   prompts, renders a template directory into a target directory with

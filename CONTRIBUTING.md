@@ -96,8 +96,8 @@ node /path/to/foundry/packages/create-react-foundry/dist/index.js test-app \
 cd test-app
 ```
 
-Since `@foundryui/cli` and `@foundryui/generator-core` aren't on the public
-registry yet, point the scaffolded project at your local builds before
+To test local, unreleased changes rather than the versions currently on the
+registry, point the scaffolded project at your local builds before
 installing. Add to its `package.json`:
 
 ```json
@@ -154,11 +154,11 @@ Releases go through [Changesets](https://github.com/changesets/changesets):
    (`turbo run build && changeset publish`) and publishes every package with
    a version bump to npm.
 3. Publishing requires an `NPM_TOKEN` secret on the repository, with publish
-   access to the `@foundryui` org and to `create-react-foundry`. That's
-   infrastructure setup, not something a release PR can do on its own. Until
-   the secret exists, the release workflow's publish step checks for it and
-   skips with a message instead of failing, so pushes to `main` before then
-   don't fail CI or send failure emails.
+   access to the `@foundryui` org and to `create-react-foundry`. That secret
+   is configured, so this step runs for real. The publish step still checks
+   for the secret first and skips with a message instead of failing if it's
+   ever missing (e.g. a fork's CI), rather than failing the build or sending
+   failure emails.
 
 The first release (`0.1.0` for all three packages) was hand-written rather
 than produced by this flow, since there was no prior published version for

@@ -1,6 +1,8 @@
 # Foundry
 
 [![CI](https://github.com/PolinaTymchenko/foundry/actions/workflows/ci.yml/badge.svg)](https://github.com/PolinaTymchenko/foundry/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/create-react-foundry)](https://www.npmjs.com/package/create-react-foundry)
+[![npm downloads](https://img.shields.io/npm/dw/create-react-foundry)](https://www.npmjs.com/package/create-react-foundry)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
 [![Node.js >= 20](https://img.shields.io/badge/node-%3E%3D20-339933?logo=node.js&logoColor=white)](package.json)
 
@@ -12,13 +14,11 @@ It's not a copy-paste starter and not a themeable UI kit. It's meant for
 platform teams standing up the component library their own product teams will
 build on.
 
-![Scaffolding a project with npm create react-foundry, then generating a new Card component with foundry generate — Storybook picks up both automatically](.github/media/demo.gif)
-
-**Status: v0.1, pre-publish.** Everything below has been run against a fresh
-scaffold; see [Verifying this yourself](#verifying-this-yourself). The three
-packages this repo produces aren't on the npm registry yet, so `npm install`
-won't work from outside this repo until that changes. See
-[Publishing status](#publishing-status).
+**Status: published.** All three packages are live on the public npm
+registry. `npm create react-foundry` and `foundry generate` both work from
+anywhere — no local build or override workaround required; see
+[Verifying this yourself](#verifying-this-yourself). Versions and the
+release process are in [Publishing status](#publishing-status).
 
 ## Table of contents
 
@@ -227,11 +227,11 @@ Before your first publish:
 
 Two layers: a framework-agnostic generator engine, and two CLIs built on it.
 
-| Package | npm name | Purpose |
-| --- | --- | --- |
-| `packages/generator-core` | `@foundryui/generator-core` | Framework-agnostic engine: prompts, `{{variable}}` template rendering, lifecycle hooks. Knows nothing about "projects" or "components." |
-| `packages/create-react-foundry` | `create-react-foundry` | `npm create react-foundry`. Scaffolds a new project, once. |
-| `packages/cli` | `@foundryui/cli` (bin `foundry`) | `foundry generate ...`. The CLI a scaffolded project depends on afterward. |
+| Package | npm name | Version | Purpose |
+| --- | --- | --- | --- |
+| `packages/generator-core` | `@foundryui/generator-core` | [![npm](https://img.shields.io/npm/v/@foundryui/generator-core)](https://www.npmjs.com/package/@foundryui/generator-core) | Framework-agnostic engine: prompts, `{{variable}}` template rendering, lifecycle hooks. Knows nothing about "projects" or "components." |
+| `packages/create-react-foundry` | `create-react-foundry` | [![npm](https://img.shields.io/npm/v/create-react-foundry)](https://www.npmjs.com/package/create-react-foundry) | `npm create react-foundry`. Scaffolds a new project, once. |
+| `packages/cli` | `@foundryui/cli` (bin `foundry`) | [![npm](https://img.shields.io/npm/v/@foundryui/cli)](https://www.npmjs.com/package/@foundryui/cli) | `foundry generate ...`. The CLI a scaffolded project depends on afterward. |
 
 Neither CLI reimplements prompt handling or template rendering; both are
 built on `generator-core`. A dependency-cruiser rule (`pnpm lint:deps`)
@@ -272,30 +272,36 @@ the conventions the generator encodes are written down.
 
 ## Publishing status
 
-None of the three packages this repo produces (`@foundryui/generator-core`,
-`create-react-foundry`, `@foundryui/cli`) are on the public npm registry
-yet, checked directly against the registry while preparing this release.
-Every command in this README has been run against a real scaffold using
-local builds (below); what's missing is the first `npm publish`.
+All three packages this repo produces (`@foundryui/generator-core`,
+`create-react-foundry`, `@foundryui/cli`) are published and live on the
+public npm registry, checked directly against it while writing this section.
+See the Version column in [Architecture](#architecture) for current versions
+and links, or the badges at the top of this file.
+
+Releases are automated via [Changesets](https://github.com/changesets/changesets):
+merging a PR with a changeset opens a "Version Packages" PR, and merging that
+PR publishes every changed package to npm. See
+[Releasing](./CONTRIBUTING.md#releasing-maintainers) in CONTRIBUTING.md for
+the full flow.
 
 ### Verifying this yourself
 
-Every command block in this README was run against a real, freshly scaffolded
-project before being written down. Since the packages aren't published yet,
-verification uses local builds instead of the registry:
+Checked directly against the registry: all three packages resolve, and
+`create-react-foundry`'s and `@foundryui/cli`'s published dependency on
+`@foundryui/generator-core` is pinned to a real version (not left as the
+workspace-protocol reference used inside this monorepo). That's what makes
+the command below a normal `npm install`, no workaround required:
 
 ```bash
-pnpm install && pnpm build   # from this repo's root
-
-# then, in a scratch directory:
-node path/to/foundry/packages/create-react-foundry/dist/index.js my-app
+npm create react-foundry@latest my-app -- --package-scope=@test --license=mit
+cd my-app
+pnpm install && pnpm build && pnpm test
 ```
 
-A freshly scaffolded project's `pnpm install` will fail on `@foundryui/cli`
-until it's published. For local verification, add a `pnpm.overrides` entry
-pointing at your local build (`"@foundryui/cli": "link:/path/to/foundry/packages/cli"`,
-same for `@foundryui/generator-core`) before installing. This is a
-verification workaround, not something to commit to a real project.
+Contributors testing *unreleased* local changes instead of a published
+version still want the `pnpm.overrides`/`link:` workflow; see
+[Testing methodology](./CONTRIBUTING.md#testing-methodology) in
+CONTRIBUTING.md.
 
 ## Contributing
 
