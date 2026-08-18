@@ -72,10 +72,11 @@ cd my-design-system
 pnpm dev
 ```
 
-This scaffolds a monorepo with design tokens, a `Button` and an `Input`, a
-Storybook instance, and CI, then starts Storybook with both components:
-variants, sizes, loading and disabled states, controlled and uncontrolled form
-behavior, and a passing accessibility check.
+This scaffolds a monorepo with design tokens, a `Button` and an `Input`, an
+`apps/web` app wired to them, a Storybook instance, and CI, then starts both:
+the app at `:5173` and Storybook at `:6006`, covering variants, sizes,
+loading and disabled states, controlled and uncontrolled form behavior, and a
+passing accessibility check.
 
 You'll be asked two questions (or skip them with flags, below):
 
@@ -112,6 +113,10 @@ npm create react-foundry@latest my-design-system -- \
 - **`Button` and `Input`** (`packages/react`): forwardRef, keyboard and
   screen-reader behavior, controlled/uncontrolled form state via a shared
   `useControlledState` hook, variants and sizes as style axes.
+- **`apps/web`**: a Vite + React app wired to `packages/react`, with an
+  optional [![TanStack](https://img.shields.io/badge/-TanStack-FF4154?logo=tanstack&logoColor=white)](https://tanstack.com)
+  Query/Form/Table demo backed by a mock API — safe to delete if you don't
+  want it.
 - **Storybook** (`apps/storybook`), loading every `*.stories.tsx` in
   `packages/react` automatically. Nothing to register by hand.
 - **An accessibility gate**: `eslint-plugin-jsx-a11y` at write time, a live

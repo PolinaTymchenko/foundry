@@ -5,8 +5,10 @@
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/PolinaTymchenko/foundry/blob/main/LICENSE)
 
 Scaffolds a new [Foundry](https://github.com/PolinaTymchenko/foundry) project:
-design tokens, a `Button` and an `Input`, Storybook, and CI, wired together
-from the first commit.
+design tokens, a `Button` and an `Input`, an `apps/web` app (with an optional
+[![TanStack](https://img.shields.io/badge/-TanStack-FF4154?logo=tanstack&logoColor=white)](https://tanstack.com)
+Query/Form/Table demo), Storybook, and CI, wired together from the first
+commit.
 
 ```bash
 npm create react-foundry@latest my-design-system

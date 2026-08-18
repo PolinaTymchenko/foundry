@@ -154,11 +154,16 @@ Releases go through [Changesets](https://github.com/changesets/changesets):
    (`turbo run build && changeset publish`) and publishes every package with
    a version bump to npm.
 3. Publishing requires an `NPM_TOKEN` secret on the repository, with publish
-   access to the `@foundryui` org and to `create-react-foundry`. That secret
-   is configured, so this step runs for real. The publish step still checks
-   for the secret first and skips with a message instead of failing if it's
-   ever missing (e.g. a fork's CI), rather than failing the build or sending
-   failure emails.
+   access to the `@foundryui` org and to `create-react-foundry`. As of this
+   writing that secret is **not** set (checked directly via `gh secret
+   list`), so step 2 currently skips with a message instead of publishing —
+   confirmed by merging a real "Version Packages" PR and watching the
+   publish step no-op. Every version released so far appears to have been
+   published by hand from a maintainer's own npm login rather than through
+   this workflow. Add the secret in repo settings to make step 2 actually
+   publish; until then, merging a "Version Packages" PR only bumps
+   versions and CHANGELOGs in git — a maintainer still has to run
+   `pnpm release` (or `npm publish` per package) locally afterward.
 
 The first release (`0.1.0` for all three packages) was hand-written rather
 than produced by this flow, since there was no prior published version for
