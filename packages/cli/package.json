@@ -1,6 +1,6 @@
 {
   "name": "@foundryui/cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "The ongoing, in-project Foundry CLI. Scaffolds artifacts (components today, more artifact types later) into an existing Foundry project. Not to be confused with create-react-foundry, which scaffolds the project itself.",
   "keywords": [
     "react",

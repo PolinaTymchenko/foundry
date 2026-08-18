@@ -1,6 +1,6 @@
 {
   "name": "@foundryui/generator-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Framework-agnostic template rendering and prompt orchestration engine shared by every Foundry generator.",
   "keywords": [
     "scaffolding",
