@@ -1,5 +1,13 @@
 # @foundryui/cli
 
+## 0.2.1
+
+### Patch Changes
+
+- 6d08dff: Adds a README to each published package, shown on its npm page.
+- Updated dependencies [6d08dff]
+  - @foundryui/generator-core@0.1.1
+
 ## 0.2.0
 
 ### Minor Changes
