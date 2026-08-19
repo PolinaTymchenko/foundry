@@ -28,10 +28,7 @@
   "bin": {
     "foundry": "./dist/index.js"
   },
-  "files": [
-    "dist",
-    "templates"
-  ],
+  "files": ["dist", "templates"],
   "scripts": {
     "build": "tsup && chmod +x dist/index.js",
     "dev": "tsup --watch",

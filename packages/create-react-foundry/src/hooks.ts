@@ -127,7 +127,10 @@ export const projectHooks: GeneratorHooks<ProjectAnswers> = {
   async afterRender(ctx: GeneratorContext<ProjectAnswers>) {
     await finalizeLicense(ctx.targetDir, ctx.answers.license);
 
-    await renameIfExists(path.join(ctx.targetDir, "_gitignore"), path.join(ctx.targetDir, ".gitignore"));
+    await renameIfExists(
+      path.join(ctx.targetDir, "_gitignore"),
+      path.join(ctx.targetDir, ".gitignore"),
+    );
     await renameIfExists(path.join(ctx.targetDir, "_npmrc"), path.join(ctx.targetDir, ".npmrc"));
 
     if (ctx.answers.initGit) {
