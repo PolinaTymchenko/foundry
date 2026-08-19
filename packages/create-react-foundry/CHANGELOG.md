@@ -1,5 +1,18 @@
 # create-react-foundry
 
+## 0.4.0
+
+### Minor Changes
+
+- Adds `--no-git`, `--yes`, and `--help`/`-h` flags to `create-react-foundry`, and `--help`/`-h` to `foundry generate`. Previously, the only way to skip the "Initialize a git repository?" prompt was an interactive terminal — running either CLI outside a TTY without these flags now prints a clear, actionable error instead of crashing with a raw `TTY initialization failed: uv_tty_init returned EINVAL`. Exposes a new `hasFlag` helper from `@foundryui/generator-core` for detecting boolean CLI flags, shared by both CLIs. Both package READMEs now document all supported flags, including a non-interactive/CI usage example.
+
+### Patch Changes
+
+- Fixes every scaffolded project shipping without a `.gitignore` or `.npmrc`. Both files existed in the template since Milestone 1, but npm hardcodes `.gitignore` and `.npmrc` onto its always-ignore list during packing, silently stripping them from every published tarball regardless of the package's `files` config. The template now ships them as `_gitignore`/`_npmrc` and renames them to their real names during scaffolding, before `git init`/`git add -A` runs — so `git add -A` no longer stages `node_modules/` and `.DS_Store` into the first commit.
+- Fixes an intermittent `pnpm dev` crash in scaffolded projects. `turbo run dev` was scheduling each package's own watch-mode `dev` task (`tsup --watch` / `vite build --watch`) alongside a separately-triggered `build` task for the same package — one running as a `^build` dependency of `apps/web`/`apps/storybook`'s `dev` tasks — and both clean-and-write the same `dist/` directory concurrently. `turbo.json` now serializes each watched package's own `build` ahead of its own `dev` watcher, so the two no longer race.
+- Updated dependencies
+  - @foundryui/generator-core@0.1.2
+
 ## 0.3.0
 
 ### Minor Changes

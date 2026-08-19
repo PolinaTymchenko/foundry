@@ -1,6 +1,6 @@
 {
   "name": "@foundryui/generator-core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Framework-agnostic template rendering and prompt orchestration engine shared by every Foundry generator.",
   "keywords": [
     "scaffolding",
@@ -31,7 +31,9 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
