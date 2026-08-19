@@ -97,6 +97,26 @@ export function deriveDefaultPackageScope(projectName: string): string {
   return `@${base}`;
 }
 
+/**
+ * npm hardcodes .gitignore and .npmrc onto its always-ignore list, so a
+ * template can't ship them under their real names and expect them to survive
+ * `npm publish` (verified via `npm pack --dry-run --json`, which drops both
+ * from every packed file list regardless of the `files` field). They ship as
+ * _gitignore/_npmrc and get renamed back here, after publish, at scaffold
+ * time — the same workaround create-react-app and create-vite use. Best
+ * effort: a missing source file degrades to "no .gitignore" rather than a
+ * failed generation.
+ */
+async function renameIfExists(from: string, to: string): Promise<void> {
+  try {
+    await rename(from, to);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+      throw error;
+    }
+  }
+}
+
 export const projectHooks: GeneratorHooks<ProjectAnswers> = {
   async beforeRender(ctx: GeneratorContext<ProjectAnswers>) {
     if (!ctx.answers.packageScope) {
@@ -106,6 +126,9 @@ export const projectHooks: GeneratorHooks<ProjectAnswers> = {
 
   async afterRender(ctx: GeneratorContext<ProjectAnswers>) {
     await finalizeLicense(ctx.targetDir, ctx.answers.license);
+
+    await renameIfExists(path.join(ctx.targetDir, "_gitignore"), path.join(ctx.targetDir, ".gitignore"));
+    await renameIfExists(path.join(ctx.targetDir, "_npmrc"), path.join(ctx.targetDir, ".npmrc"));
 
     if (ctx.answers.initGit) {
       const gitSpinner = clack.spinner();

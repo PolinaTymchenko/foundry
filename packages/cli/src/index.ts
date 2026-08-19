@@ -2,7 +2,7 @@
 import { access } from "node:fs/promises";
 import path from "node:path";
 import * as clack from "@clack/prompts";
-import { parseFlag, reportGeneratorError, runGenerator } from "@foundryui/generator-core";
+import { hasFlag, parseFlag, reportGeneratorError, runGenerator } from "@foundryui/generator-core";
 import { readFoundryConfig } from "./config.js";
 import { artifactGenerators, isArtifactType } from "./generators/index.js";
 
@@ -25,6 +25,12 @@ function printUsage(): void {
 
 async function main(): Promise<void> {
   const argv = process.argv.slice(2);
+
+  if (hasFlag(argv, "help") || argv.includes("-h")) {
+    printUsage();
+    return;
+  }
+
   const [verb, type, name] = argv;
 
   if (verb !== "generate" || !type || !isArtifactType(type)) {

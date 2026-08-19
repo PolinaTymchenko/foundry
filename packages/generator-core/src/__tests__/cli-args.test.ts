@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseFlag } from "../cli-args.js";
+import { hasFlag, parseFlag } from "../cli-args.js";
 
 describe("parseFlag", () => {
   it("reads --name=value form", () => {
@@ -22,5 +22,19 @@ describe("parseFlag", () => {
     expect(
       parseFlag(["my-project", "--package-scope=@acme", "--token-prefix=fd"], "package-scope"),
     ).toBe("@acme");
+  });
+});
+
+describe("hasFlag", () => {
+  it("returns true when the boolean flag is present", () => {
+    expect(hasFlag(["--yes"], "yes")).toBe(true);
+  });
+
+  it("returns false when it's absent", () => {
+    expect(hasFlag(["--no-git"], "yes")).toBe(false);
+  });
+
+  it("doesn't consume a following positional argument", () => {
+    expect(hasFlag(["--yes", "my-project"], "yes")).toBe(true);
   });
 });

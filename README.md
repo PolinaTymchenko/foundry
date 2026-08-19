@@ -89,10 +89,12 @@ Package scope (`{scope}/react`, `{scope}/tokens`) isn't asked, since most
 projects never publish anywhere. It defaults to `@` + the first word of the
 project name; override it with `--package-scope` if you do plan to publish.
 
-Non-interactive, for scripts or CI:
+Non-interactive, for scripts or CI (required outside a real terminal — see
+`--yes`/`--no-git` below):
 
 ```bash
 npm create react-foundry@latest my-design-system -- \
+  --yes \
   --package-scope=@acme \
   --token-prefix=acme \
   --license=mit
@@ -105,6 +107,12 @@ npm create react-foundry@latest my-design-system -- \
   hyphens, starting with a letter.
 - `--license=<apache-2.0|mit>`: license for the generated project. Defaults to
   `apache-2.0`.
+- `--no-git`: skip `git init`.
+- `--yes`: accept the default answer for the "Initialize a git repository?"
+  prompt instead of asking. Outside an interactive terminal, a project name
+  and one of `--yes`/`--no-git` are both required — without them, the CLI
+  can't prompt and exits with an error instead of hanging.
+- `--help` (or `-h`): print usage and exit.
 
 ## What you get
 

@@ -2,7 +2,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import * as clack from "@clack/prompts";
-import { parseFlag, reportGeneratorError, runGenerator } from "@foundryui/generator-core";
+import { hasFlag, parseFlag, reportGeneratorError, runGenerator } from "@foundryui/generator-core";
 import { projectHooks } from "./hooks.js";
 import { projectQuestions, SCOPE_PATTERN } from "./prompts.js";
 import type { ProjectAnswers } from "./types.js";
@@ -20,14 +20,39 @@ const LICENSE_SPDX: Record<string, string> = {
   mit: "MIT",
 };
 
+function printHelp(): void {
+  clack.log.message(
+    [
+      "Usage: npm create react-foundry@latest [project-name] [flags]",
+      "",
+      "Flags:",
+      "  --package-scope=<@scope>     npm scope for generated packages (default: derived from project name)",
+      "  --token-prefix=<prefix>      CSS custom property prefix (default: fd)",
+      "  --license=<apache-2.0|mit>   license for the generated project (default: apache-2.0)",
+      "  --no-git                     skip git init",
+      "  --yes                        accept defaults for every remaining prompt, non-interactively",
+      "  --help, -h                   print this message and exit",
+    ].join("\n"),
+  );
+}
+
 async function main(): Promise<void> {
+  const argv = process.argv.slice(2);
+
+  if (hasFlag(argv, "help") || argv.includes("-h")) {
+    printHelp();
+    return;
+  }
+
   clack.intro("create-react-foundry");
 
-  const argv = process.argv.slice(2);
   const positionalName = argv.find((arg) => !arg.startsWith("-"));
   const tokenPrefix = parseFlag(argv, "token-prefix") ?? "fd";
   const packageScope = parseFlag(argv, "package-scope");
   const licenseKey = (parseFlag(argv, "license") ?? "apache-2.0").toLowerCase();
+  const noGit = hasFlag(argv, "no-git");
+  const yes = hasFlag(argv, "yes");
+  const initGit = noGit ? false : yes ? true : undefined;
 
   if (!TOKEN_PREFIX_PATTERN.test(tokenPrefix)) {
     clack.log.error(
@@ -52,6 +77,31 @@ async function main(): Promise<void> {
     return;
   }
 
+  if (!process.stdin.isTTY) {
+    const missing: string[] = [];
+    if (!positionalName) {
+      missing.push('a project name, e.g. "my-design-system"');
+    }
+    if (initGit === undefined) {
+      missing.push("--yes or --no-git (to resolve whether to run `git init`)");
+    }
+    if (missing.length > 0) {
+      clack.log.error(
+        [
+          "This doesn't look like an interactive terminal, so create-react-foundry",
+          "can't prompt for the missing answer(s) below. Pass them as flags instead:",
+          "",
+          ...missing.map((item) => `  - ${item}`),
+          "",
+          "Example:",
+          "  npm create react-foundry@latest my-design-system -- --yes",
+        ].join("\n"),
+      );
+      process.exitCode = 1;
+      return;
+    }
+  }
+
   try {
     const { answers } = await runGenerator<ProjectAnswers>({
       definition: {
@@ -67,6 +117,7 @@ async function main(): Promise<void> {
         currentYear: String(new Date().getFullYear()),
         ...(positionalName ? { projectName: positionalName } : {}),
         ...(packageScope ? { packageScope } : {}),
+        ...(initGit !== undefined ? { initGit } : {}),
       },
     });
 

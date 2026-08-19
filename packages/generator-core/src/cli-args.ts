@@ -15,3 +15,12 @@ export function parseFlag(argv: string[], name: string): string | undefined {
   }
   return undefined;
 }
+
+/**
+ * True if `--name` is present in argv as a boolean flag (e.g. --yes,
+ * --no-git, --help). Unlike parseFlag, this never consumes a following argv
+ * value, so `--yes my-project` still leaves `my-project` as a positional.
+ */
+export function hasFlag(argv: string[], name: string): boolean {
+  return argv.includes(`--${name}`);
+}

@@ -16,6 +16,28 @@ cd my-design-system
 pnpm dev
 ```
 
+That starts Storybook and the `apps/web` app, covering variants, sizes,
+loading and disabled states, controlled and uncontrolled form behavior, and a
+passing accessibility check. Requires Node >=20.
+
+## Flags
+
+| Flag | Default | |
+| --- | --- | --- |
+| `--package-scope=<@scope>` | derived from the project name | npm scope for generated packages |
+| `--token-prefix=<prefix>` | `fd` | CSS custom property prefix for design tokens |
+| `--license=<apache-2.0\|mit>` | `apache-2.0` | license for the generated project |
+| `--no-git` | off | skip `git init` |
+| `--yes` | off | accept the default answer for the remaining prompt, non-interactively |
+| `--help`, `-h` | — | print usage and exit |
+
+Non-interactive, e.g. in CI (`--yes` or `--no-git` is required outside a real
+terminal, along with a project name):
+
+```bash
+npm create react-foundry@latest my-design-system -- --yes --package-scope=@acme
+```
+
 `foundry generate` (the `@foundryui/cli` package) keeps the component library
 growing after that. See the
 [root README](https://github.com/PolinaTymchenko/foundry#readme) for the full
